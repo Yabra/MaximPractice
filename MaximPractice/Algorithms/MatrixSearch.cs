@@ -29,7 +29,7 @@ public class MatrixSearch : IDriverSearchAlgorithm
 
         while (candidates.Count < count)
         {
-            if(r == 0)
+            if (r == 0)
             {
                 TryAddDriver(allDrivers, candidates, startPosition, 0, 0);
             }
