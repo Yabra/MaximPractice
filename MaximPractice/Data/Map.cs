@@ -2,7 +2,6 @@
 
 public class Map
 {
-    private int _nextDriverId;
     public int Width { get; }
     public int Height { get; }
 
@@ -23,30 +22,59 @@ public class Map
 
         Width = width;
         Height = height;
-        _nextDriverId = 0;
     }
 
-    public int AddDriver(Point newDriverPosition)
+    public Driver? GetDriverById(int id)
+        => _driversById.GetValueOrDefault(id);
+
+    public Driver? GetDriverByPosition(Point position)
+        => _driversByPosition.GetValueOrDefault(position);
+
+    public bool ContainsDriver(int id)
+        =>_driversById.ContainsKey(id);
+
+    public bool IsPositionOccuped(Point position)
+        => _driversByPosition.ContainsKey(position);
+
+    public Driver[] GetAllDrivers()
+        => _driversById.Values.ToArray();
+
+    public IReadOnlyDictionary<Point, Driver> GetAllDriversByPosition()
+        => _driversByPosition;
+
+    public void AddDriver(int id, Point newDriverPosition)
     {
-        ValidateBounds(newDriverPosition);
-        ValidatePositionAvailability(newDriverPosition);
-
-        var newId = _nextDriverId;
-        _nextDriverId++;
-
-        var newDriver = new Driver(newId, newDriverPosition);
-
-        _driversById[newId] = newDriver;
-        _driversByPosition[newDriverPosition] = newDriver;
-
-        return newId;
-    }
-
-    public void UpdateDriverPosition(int driverId, Point newDriverPosition)
-    {
-        if (!_driversById.TryGetValue(driverId, out var driver))
+        if (!IsInsideBounds(newDriverPosition))
         {
-            throw new ArgumentException($"Driver id={driverId} not found");
+            throw new ArgumentOutOfRangeException(nameof(newDriverPosition));
+        }
+
+        if (IsPositionOccuped(newDriverPosition))
+        {
+            throw new InvalidOperationException($"Position {newDriverPosition} is occuped");
+        }
+
+        if (_driversById.ContainsKey(id))
+        {
+            throw new InvalidOperationException($"Driver with id={id} already exists");
+        }
+
+        var newDriver = new Driver(id, newDriverPosition);
+
+        _driversById[id] = newDriver;
+        _driversByPosition[newDriverPosition] = newDriver;
+    }
+
+    public void UpdateDriver(int id, Point newDriverPosition)
+    {
+        if (!IsInsideBounds(newDriverPosition))
+        {
+            throw new ArgumentOutOfRangeException(nameof(newDriverPosition));
+        }
+
+        if (!_driversById.TryGetValue(id, out var driver))
+        {
+            throw new ArgumentException($"Driver with id={id} not found");
         }
 
         if (driver.Position == newDriverPosition)
@@ -54,50 +82,32 @@ public class Map
             return;
         }
 
-        ValidateBounds(newDriverPosition);
-        ValidatePositionAvailability(newDriverPosition);
+        if (IsPositionOccuped(newDriverPosition))
+        {
+            throw new InvalidOperationException($"Position {newDriverPosition} is occuped");
+        }
 
         _driversByPosition.Remove(driver.Position);
         driver.UpdatePosition(newDriverPosition);
         _driversByPosition[newDriverPosition] = driver;
     }
 
-    public Driver[] GetAllDrivers()
+    public void RemoveDriver(int id)
     {
-        return _driversById.Values.ToArray();
-    }
-
-    public IReadOnlyDictionary<Point, Driver> GetAllDriversByPosition()
-    {
-        return _driversByPosition;
-    }
-
-    private void ValidateBounds(Point position)
-    {
-        if (position.X < 0 || position.X >= Width)
+        if (!_driversById.TryGetValue(id, out var driver))
         {
-            throw new ArgumentOutOfRangeException(
-                nameof(position.X),
-                position.X,
-                $"X must be between 0 and {Width - 1}"
-                );
+            throw new ArgumentException($"Driver id={id} not found");
         }
 
-        if (position.Y < 0 || position.Y >= Height)
-        {
-            throw new ArgumentOutOfRangeException(
-                nameof(position.Y),
-                position.Y,
-                $"Y must be between 0 and {Height - 1}"
-                );
-        }
+        _driversById.Remove(id);
+        _driversByPosition.Remove(driver.Position);
     }
 
-    private void ValidatePositionAvailability(Point position)
+    public bool IsInsideBounds(Point position)
     {
-        if (_driversByPosition.ContainsKey(position))
-        {
-            throw new ArgumentException($"Position ({position.X}, {position.Y}) is taken by other driver");
-        }
+        return position.X >= 0
+            && position.X < Width
+            && position.Y >= 0
+            && position.Y < Height;
     }
 }

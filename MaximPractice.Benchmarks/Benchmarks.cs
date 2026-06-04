@@ -46,6 +46,7 @@ public class Benchmarks
         {
             var newCoord = emptyCoords[i];
             _map.AddDriver(
+                i,
                 new Point(
                     newCoord.Item1,
                     newCoord.Item2

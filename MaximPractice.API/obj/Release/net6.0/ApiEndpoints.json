@@ -1,0 +1,34 @@
+[
+  {
+    "ContainingType": "MaximPractice.API.Controllers.DriverController",
+    "Method": "AddOrUpdate",
+    "RelativePath": "api/drivers",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "MaximPractice.API.Dto.DriverPositionDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MaximPractice.API.Controllers.OrderController",
+    "Method": "GetDriver",
+    "RelativePath": "api/orders",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "MaximPractice.API.Dto.OrderDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]

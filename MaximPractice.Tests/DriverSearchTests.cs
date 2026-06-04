@@ -18,13 +18,13 @@ public class DriverSearchTests
     private void SetupSmallMap()
     {
         _smallMap = new Map(100, 100);
-        _smallMap.AddDriver(new Point(10, 10)); // id=0
-        _smallMap.AddDriver(new Point(20, 20)); // id=1
-        _smallMap.AddDriver(new Point(30, 30)); // id=2
-        _smallMap.AddDriver(new Point(40, 40)); // id=3
-        _smallMap.AddDriver(new Point(50, 50)); // id=4
-        _smallMap.AddDriver(new Point(60, 60)); // id=5
-        _smallMap.AddDriver(new Point(65, 65)); // id=6
+        _smallMap.AddDriver(0, new Point(10, 10));
+        _smallMap.AddDriver(1, new Point(20, 20));
+        _smallMap.AddDriver(2, new Point(30, 30));
+        _smallMap.AddDriver(3, new Point(40, 40));
+        _smallMap.AddDriver(4, new Point(50, 50));
+        _smallMap.AddDriver(5, new Point(60, 60));
+        _smallMap.AddDriver(6, new Point(65, 65));
     }
 
     [TestCaseSource(nameof(Algorithms))]

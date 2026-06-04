@@ -3,7 +3,7 @@ using MaximPractice.Interfaces;
 
 namespace MaximPractice.Algorithms;
 
-internal class TopKSearch : IDriverSearchAlgorithm
+public class TopKSearch : IDriverSearchAlgorithm
 {
     public Driver[] FindNearestDrivers(Map map, Point startPosition, int count = 5)
     {
