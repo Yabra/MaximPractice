@@ -23,11 +23,11 @@ public class ParallelLimitMiddleware
             {
                 isUnavailable = true;
             }
+
             else
             {
                 _currentCount++;
             }
-
         }
 
         if (isUnavailable)

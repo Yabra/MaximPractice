@@ -6,15 +6,17 @@ namespace MaximPractice.API.Services;
 
 public class OrderService
 {
+    private readonly ILogger<OrderService> _logger;
     private readonly Map _map;
     private readonly RandomService _randomService;
     private readonly IDriverSearchAlgorithm _algorythm;
 
-    public OrderService(Map map, RandomService randomService, IDriverSearchAlgorithm algorythm)
+    public OrderService(Map map, RandomService randomService, IDriverSearchAlgorithm algorythm, ILogger<OrderService> logger)
     {
         _map = map;
         _randomService = randomService;
         _algorythm = algorythm;
+        _logger = logger;
     }
 
     public async Task<DriverResponceDto> GetDriverForOrder(int orderId, int x, int y)
@@ -23,6 +25,7 @@ public class OrderService
 
         if (!_map.IsInsideBounds(orderPoint))
         {
+            _logger.LogWarning($"При попытке заказа id={orderId} даны некорректные координаты x={x}, y={y}");
             throw new ArgumentException("Координаты некорректны");
         }
 
@@ -30,6 +33,7 @@ public class OrderService
 
         if (drivers.Length == 0)
         {
+            _logger.LogWarning($"При попытке заказа id={orderId} не было нвйдено свободных водителей");
             throw new ArgumentException("Свободных водителей нет");
         }
 
