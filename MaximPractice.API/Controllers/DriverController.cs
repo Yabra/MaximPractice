@@ -16,11 +16,10 @@ public class DriverController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> AddOrUpdate([FromBody] DriverPositionDto request)
+    public IActionResult AddOrUpdate([FromBody] DriverPositionDto request)
     {
         try
         {
-            await Task.Delay(10000);
 
             var result = _driverService.AddOrUpdateDriver(
                 request.Id,
