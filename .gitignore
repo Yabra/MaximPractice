@@ -1,0 +1,9 @@
+.vs
+MaximPractice/bin
+MaximPractice/obj
+MaximPractice.Benchmarks/bin
+MaximPractice.Benchmarks/obj
+MaximPractice.Tests/bin
+MaximPractice.Tests/obj
+MaximPractice.API/bin
+MaximPractice.API/obj

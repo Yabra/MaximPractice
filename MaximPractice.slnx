@@ -1,0 +1,10 @@
+<Solution>
+  <Folder Name="/Элементы решения/">
+    <File Path=".gitignore" />
+    <File Path="global.json" />
+  </Folder>
+  <Project Path="MaximPractice.API/MaximPractice.API.csproj" Id="6e379359-4d36-4347-ab0f-fe554c1953d4" />
+  <Project Path="MaximPractice.Benchmarks/MaximPractice.Benchmarks.csproj" Id="0e8fd4a9-54f6-4930-bb2d-1a75c6eb85bd" />
+  <Project Path="MaximPractice.Tests/MaximPractice.Tests.csproj" Id="930a629d-29e7-4126-838b-b02e6ae4883f" />
+  <Project Path="MaximPractice/MaximPractice.csproj" />
+</Solution>
