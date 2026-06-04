@@ -1,5 +1,4 @@
-﻿using MaximPractice.Algorithms;
-using MaximPractice.API.Dto;
+﻿using MaximPractice.API.Dto;
 using MaximPractice.Data;
 using MaximPractice.Interfaces;
 
@@ -11,11 +10,11 @@ public class OrderService
     private readonly RandomService _randomService;
     private readonly IDriverSearchAlgorithm _algorythm;
 
-    public OrderService(Map map, RandomService randomService)
+    public OrderService(Map map, RandomService randomService, IDriverSearchAlgorithm algorythm)
     {
         _map = map;
         _randomService = randomService;
-        _algorythm = new TopKSearch();
+        _algorythm = algorythm;
     }
 
     public async Task<DriverResponceDto> GetDriverForOrder(int orderId, int x, int y)

@@ -1,7 +1,6 @@
 ﻿using MaximPractice.API.Dto;
 using MaximPractice.API.Services;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 
 namespace MaximPractice.API.Controllers;
 

@@ -1,6 +1,5 @@
 using MaximPractice.API.Dto;
 using MaximPractice.API.Services;
-using MaximPractice.Data;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MaximPractice.API.Controllers;
@@ -17,10 +16,12 @@ public class DriverController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult AddOrUpdate([FromBody] DriverPositionDto request)
+    public async Task<IActionResult> AddOrUpdate([FromBody] DriverPositionDto request)
     {
         try
         {
+            await Task.Delay(10000);
+
             var result = _driverService.AddOrUpdateDriver(
                 request.Id,
                 request.X,
@@ -29,7 +30,7 @@ public class DriverController : ControllerBase
             return Ok(result);
         }
 
-        catch(ArgumentException ex)
+        catch (ArgumentException ex)
         {
             return BadRequest(ex.Message);
         }

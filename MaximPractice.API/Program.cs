@@ -1,3 +1,5 @@
+using MaximPractice.Algorithms;
+using MaximPractice.API.Middlewares;
 using MaximPractice.API.Services;
 using MaximPractice.Data;
 using MaximPractice.Interfaces;
@@ -14,11 +16,17 @@ public class Program
         var width = mapSection.GetValue<int>("Width");
         var height = mapSection.GetValue<int>("Height");
 
+        var settingsSection = builder.Configuration.GetSection("Settings");
+        var parallelLimit = settingsSection.GetValue<int>("ParallelLimit");
+
+        ParallelLimitMiddleware.Limit = parallelLimit;
+
         builder.Services.AddSingleton<Map>(_ => new Map(width, height));
         builder.Services.AddSingleton<DriverService>();
 
         builder.Services.AddHttpClient<RandomService>();
 
+        builder.Services.AddSingleton<IDriverSearchAlgorithm, TopKSearch>();
         builder.Services.AddScoped<OrderService>();
 
         builder.Services.AddControllers();
@@ -26,6 +34,8 @@ public class Program
         builder.Services.AddSwaggerGen();
 
         var app = builder.Build();
+
+        app.UseMiddleware<ParallelLimitMiddleware>();
 
         if (app.Environment.IsDevelopment())
         {
